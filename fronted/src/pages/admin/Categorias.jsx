@@ -4,10 +4,10 @@ import { useToast } from '../../context/ToastContext';
 
 export default function Categorias() {
     const [categorias, setCategorias] = useState([]);
-    const [loading, setLoading]       = useState(true);
-    const [nombre, setNombre]         = useState('');
-    const [editingId, setEditingId]   = useState(null);
-    const [saving, setSaving]         = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [nombre, setNombre] = useState('');
+    const [editingId, setEditingId] = useState(null);
+    const [saving, setSaving] = useState(false);
     const { toast } = useToast();
 
     useEffect(() => { load(); }, []);
@@ -66,7 +66,7 @@ export default function Categorias() {
                 {/* Formulario */}
                 <div className="form-panel">
                     <div className="form-panel-header">
-                        {editingId ? '✏ Editar categoría' : '+ Nueva categoría'}
+                        {editingId ? 'Editar categoría' : '+ Nueva categoría'}
                     </div>
                     <div className="form-panel-body">
                         <form onSubmit={handleSubmit}>
@@ -103,28 +103,28 @@ export default function Categorias() {
                     <div className="table-wrap">
                         <table className="data-table">
                             <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Acciones</th>
-                            </tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Acciones</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            {categorias.map(c => (
-                                <tr key={c.id}>
-                                    <td className="text-muted text-sm">#{c.id}</td>
-                                    <td><strong>{c.nombre}</strong></td>
-                                    <td>
-                                        <div className="action-bar">
-                                            <button className="btn btn-sm btn-outline" onClick={() => { setEditingId(c.id); setNombre(c.nombre); }}>Editar</button>
-                                            <button className="btn btn-sm btn-danger" onClick={() => handleDelete(c.id)}>Eliminar</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                            {categorias.length === 0 && (
-                                <tr><td colSpan={3} style={{ textAlign: 'center', color: 'var(--muted)', padding: '2rem' }}>Sin categorías aún</td></tr>
-                            )}
+                                {categorias.map(c => (
+                                    <tr key={c.id}>
+                                        <td className="text-muted text-sm">#{c.id}</td>
+                                        <td><strong>{c.nombre}</strong></td>
+                                        <td>
+                                            <div className="action-bar">
+                                                <button className="btn btn-sm btn-outline" onClick={() => { setEditingId(c.id); setNombre(c.nombre); }}>Editar</button>
+                                                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(c.id)}>Eliminar</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                                {categorias.length === 0 && (
+                                    <tr><td colSpan={3} style={{ textAlign: 'center', color: 'var(--muted)', padding: '2rem' }}>Sin categorías aún</td></tr>
+                                )}
                             </tbody>
                         </table>
                     </div>

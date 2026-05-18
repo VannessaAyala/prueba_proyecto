@@ -20,7 +20,7 @@ export default function Cart() {
                 idUsuario: user.id,
                 productos: cart.map(item => ({
                     idProducto: item.id,
-                    cantidad:   item.quantity,
+                    cantidad: item.quantity,
                 })),
             };
             await api.pedidos.create(payload);

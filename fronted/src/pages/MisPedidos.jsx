@@ -45,25 +45,25 @@ export default function MisPedidos() {
                 <div className="table-wrap">
                     <table className="data-table">
                         <thead>
-                        <tr>
-                            <th>Pedido</th>
-                            <th>Fecha</th>
-                            <th>Total</th>
-                            <th>Estado</th>
-                        </tr>
+                            <tr>
+                                <th>Pedido</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        {pedidos.map(p => {
-                            const { label, cls } = fmt.estado(p.estado);
-                            return (
-                                <tr key={p.id}>
-                                    <td><strong>#{p.id}</strong></td>
-                                    <td>{fmt.date(p.fecha)}</td>
-                                    <td><strong>{fmt.price(p.total)}</strong></td>
-                                    <td><span className={`badge ${cls}`}>{label}</span></td>
-                                </tr>
-                            );
-                        })}
+                            {pedidos.map(p => {
+                                const { label, cls } = fmt.estado(p.estado);
+                                return (
+                                    <tr key={p.id}>
+                                        <td><strong>#{p.id}</strong></td>
+                                        <td>{fmt.date(p.fecha)}</td>
+                                        <td><strong>{fmt.price(p.total)}</strong></td>
+                                        <td><span className={`badge ${cls}`}>{label}</span></td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>

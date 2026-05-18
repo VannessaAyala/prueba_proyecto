@@ -5,12 +5,12 @@ import { useToast } from '../../context/ToastContext';
 const emptyForm = { nombre: '', precio: '', stock: '', categoriaId: '' };
 
 export default function Productos() {
-    const [productos,   setProductos]   = useState([]);
-    const [categorias,  setCategorias]  = useState([]);
-    const [loading,     setLoading]     = useState(true);
-    const [form,        setForm]        = useState(emptyForm);
-    const [editingId,   setEditingId]   = useState(null);
-    const [saving,      setSaving]      = useState(false);
+    const [productos, setProductos] = useState([]);
+    const [categorias, setCategorias] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [form, setForm] = useState(emptyForm);
+    const [editingId, setEditingId] = useState(null);
+    const [saving, setSaving] = useState(false);
     const { toast } = useToast();
 
     useEffect(() => { load(); }, []);
@@ -30,9 +30,9 @@ export default function Productos() {
         const cat = categorias.find(c => c.nombre === p.categoria);
         setEditingId(p.id);
         setForm({
-            nombre:      p.nombre,
-            precio:      p.precio,
-            stock:       p.stock,
+            nombre: p.nombre,
+            precio: p.precio,
+            stock: p.stock,
             categoriaId: cat ? cat.id : '',
         });
     };
@@ -43,9 +43,9 @@ export default function Productos() {
         try {
             // ProductoCreateRequest / ProductoUpdateRequest del backend
             const payload = {
-                nombre:      form.nombre,
-                precio:      parseFloat(form.precio),
-                stock:       parseInt(form.stock),
+                nombre: form.nombre,
+                precio: parseFloat(form.precio),
+                stock: parseInt(form.stock),
                 categoriaId: parseInt(form.categoriaId),
             };
             if (editingId) {
@@ -95,7 +95,7 @@ export default function Productos() {
                 {/* Formulario */}
                 <div className="form-panel">
                     <div className="form-panel-header">
-                        {editingId ? '✏ Editar producto' : '+ Nuevo producto'}
+                        {editingId ? 'Editar producto' : '+ Nuevo producto'}
                     </div>
                     <div className="form-panel-body">
                         <form onSubmit={handleSubmit}>
@@ -137,45 +137,45 @@ export default function Productos() {
                     <div className="table-wrap">
                         <table className="data-table">
                             <thead>
-                            <tr>
-                                <th>Producto</th>
-                                <th>Precio / Stock</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio / Stock</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            {productos.map(p => (
-                                <tr key={p.id}>
-                                    <td>
-                                        <strong>{p.nombre}</strong>
-                                        <div style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{p.categoria}</div>
-                                    </td>
-                                    <td>
-                                        <strong>{fmt.price(p.precio)}</strong>
-                                        <div style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{p.stock} u.</div>
-                                    </td>
-                                    <td>
-                      <span className={`badge ${p.active ? 'badge-success' : 'badge-danger'}`}>
-                        {p.active ? 'Activo' : 'Inactivo'}
-                      </span>
-                                    </td>
-                                    <td>
-                                        <div className="action-bar">
-                                            <button className="btn btn-sm btn-outline" onClick={() => handleEdit(p)}>Editar</button>
-                                            <button
-                                                className={`btn btn-sm ${p.active ? 'btn-danger' : 'btn-success'}`}
-                                                onClick={() => handleToggle(p)}
-                                            >
-                                                {p.active ? 'Desactivar' : 'Activar'}
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                            {productos.length === 0 && (
-                                <tr><td colSpan={4} style={{ textAlign: 'center', color: 'var(--muted)', padding: '2rem' }}>Sin productos</td></tr>
-                            )}
+                                {productos.map(p => (
+                                    <tr key={p.id}>
+                                        <td>
+                                            <strong>{p.nombre}</strong>
+                                            <div style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{p.categoria}</div>
+                                        </td>
+                                        <td>
+                                            <strong>{fmt.price(p.precio)}</strong>
+                                            <div style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{p.stock} u.</div>
+                                        </td>
+                                        <td>
+                                            <span className={`badge ${p.active ? 'badge-success' : 'badge-danger'}`}>
+                                                {p.active ? 'Activo' : 'Inactivo'}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div className="action-bar">
+                                                <button className="btn btn-sm btn-outline" onClick={() => handleEdit(p)}>Editar</button>
+                                                <button
+                                                    className={`btn btn-sm ${p.active ? 'btn-danger' : 'btn-success'}`}
+                                                    onClick={() => handleToggle(p)}
+                                                >
+                                                    {p.active ? 'Desactivar' : 'Activar'}
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                                {productos.length === 0 && (
+                                    <tr><td colSpan={4} style={{ textAlign: 'center', color: 'var(--muted)', padding: '2rem' }}>Sin productos</td></tr>
+                                )}
                             </tbody>
                         </table>
                     </div>

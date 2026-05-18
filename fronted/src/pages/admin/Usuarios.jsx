@@ -5,11 +5,11 @@ import { useToast } from '../../context/ToastContext';
 const emptyForm = { nombre: '', correo: '', contrasena: '', rol: 'CLIENTE' };
 
 export default function Usuarios() {
-    const [usuarios,  setUsuarios]  = useState([]);
-    const [loading,   setLoading]   = useState(true);
-    const [form,      setForm]      = useState(emptyForm);
+    const [usuarios, setUsuarios] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [form, setForm] = useState(emptyForm);
     const [editingId, setEditingId] = useState(null);
-    const [saving,    setSaving]    = useState(false);
+    const [saving, setSaving] = useState(false);
     const { toast } = useToast();
 
     useEffect(() => { load(); }, []);
@@ -83,7 +83,7 @@ export default function Usuarios() {
                 {/* Formulario */}
                 <div className="form-panel">
                     <div className="form-panel-header">
-                        {editingId ? '✏ Editar usuario' : '+ Nuevo usuario'}
+                        {editingId ? 'Editar usuario' : '+ Nuevo usuario'}
                     </div>
                     <div className="form-panel-body">
                         <form onSubmit={handleSubmit}>
@@ -124,45 +124,45 @@ export default function Usuarios() {
                     <div className="table-wrap">
                         <table className="data-table">
                             <thead>
-                            <tr>
-                                <th>Usuario</th>
-                                <th>Correo</th>
-                                <th>Rol</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Correo</th>
+                                    <th>Rol</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            {usuarios.map(u => (
-                                <tr key={u.id}>
-                                    <td><strong>{u.nombre}</strong></td>
-                                    <td className="text-sm text-muted">{u.correo}</td>
-                                    <td>
-                      <span className={`badge ${u.rol === 'ADMIN' ? 'badge-info' : 'badge-neutral'}`}>
-                        {u.rol}
-                      </span>
-                                    </td>
-                                    <td>
-                      <span className={`badge ${u.active ? 'badge-success' : 'badge-danger'}`}>
-                        {u.active ? 'Activo' : 'Inactivo'}
-                      </span>
-                                    </td>
-                                    <td>
-                                        <div className="action-bar">
-                                            <button className="btn btn-sm btn-outline" onClick={() => handleEdit(u)}>Editar</button>
-                                            <button
-                                                className={`btn btn-sm ${u.active ? 'btn-danger' : 'btn-success'}`}
-                                                onClick={() => handleToggle(u)}
-                                            >
-                                                {u.active ? 'Desactivar' : 'Activar'}
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                            {usuarios.length === 0 && (
-                                <tr><td colSpan={5} style={{ textAlign: 'center', color: 'var(--muted)', padding: '2rem' }}>Sin usuarios</td></tr>
-                            )}
+                                {usuarios.map(u => (
+                                    <tr key={u.id}>
+                                        <td><strong>{u.nombre}</strong></td>
+                                        <td className="text-sm text-muted">{u.correo}</td>
+                                        <td>
+                                            <span className={`badge ${u.rol === 'ADMIN' ? 'badge-info' : 'badge-neutral'}`}>
+                                                {u.rol}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span className={`badge ${u.active ? 'badge-success' : 'badge-danger'}`}>
+                                                {u.active ? 'Activo' : 'Inactivo'}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div className="action-bar">
+                                                <button className="btn btn-sm btn-outline" onClick={() => handleEdit(u)}>Editar</button>
+                                                <button
+                                                    className={`btn btn-sm ${u.active ? 'btn-danger' : 'btn-success'}`}
+                                                    onClick={() => handleToggle(u)}
+                                                >
+                                                    {u.active ? 'Desactivar' : 'Activar'}
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                                {usuarios.length === 0 && (
+                                    <tr><td colSpan={5} style={{ textAlign: 'center', color: 'var(--muted)', padding: '2rem' }}>Sin usuarios</td></tr>
+                                )}
                             </tbody>
                         </table>
                     </div>

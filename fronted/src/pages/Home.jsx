@@ -7,14 +7,14 @@ import { useToast } from '../context/ToastContext';
 
 export default function Home() {
     const [productos, setProductos] = useState([]);
-    const [loading, setLoading]     = useState(true);
-    const [search, setSearch]       = useState('');
-    const [added, setAdded]         = useState({});
+    const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState('');
+    const [added, setAdded] = useState({});
 
     const { addToCart } = useCart();
     const { isLoggedIn, isAdmin } = useAuth();
     const { toast } = useToast();
-    const navigate  = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (isLoggedIn && isAdmin) {
@@ -70,7 +70,7 @@ export default function Home() {
 
                     <div className="hero-stats">
                         <div>
-                            <div className="hero-stat-num">{productos.filter(p=>p.active).length}+</div>
+                            <div className="hero-stat-num">{productos.filter(p => p.active).length}+</div>
                             <div className="hero-stat-label">Productos</div>
                         </div>
                         <div>
@@ -116,14 +116,13 @@ export default function Home() {
                         {activos.map(p => (
                             <article key={p.id} className="product-card">
                                 <div className="product-img">
-                                    👕
                                     <span className="product-tag">{p.categoria}</span>
                                 </div>
                                 <div className="product-body">
                                     <div className="product-cat">{p.categoria}</div>
                                     <div className="product-name">{p.nombre}</div>
                                     {p.stock <= 5 && p.stock > 0 && (
-                                        <div className="stock-low">⚠ Solo {p.stock} en stock</div>
+                                        <div className="stock-low">Solo {p.stock} en stock</div>
                                     )}
                                     <div className="product-price">
                                         {fmt.price(p.precio)}

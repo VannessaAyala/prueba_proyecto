@@ -54,7 +54,7 @@ public class DataInitializer {
             Usuario admin = new Usuario();
             admin.setNombre("admin");
             admin.setCorreo("admin@novatienda.com");
-            admin.setContrasena("admin123");   // ⚠ En producción usar BCrypt
+            admin.setContrasena("admin123");   // En producción usar BCrypt
             admin.setRol("ADMIN");
             admin.setActive(true);
             usuarioRepo.save(admin);
