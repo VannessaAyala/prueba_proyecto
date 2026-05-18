@@ -21,19 +21,21 @@ jobs:
       - name: Info del deploy
         run: |
           APP_VERSION="${{ github.run_number }}-${{ github.event.workflow_run.head_sha }}"
-          echo "APP_VERSION = $APP_VERSION"
+          echo "APP_VERSION=$APP_VERSION"
           echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
 
       - name: Trigger Deploy Hook en Render
-        id: deploy
         run: |
-          HTTP_CODE=$(curl -L -s -o /dev/null -w "%{http_code}" \
-            -X GET "${{ secrets.RENDER_DEPLOY_HOOK }}")
+          echo "Enviando deploy a Render..."
+
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${{ secrets.RENDER_DEPLOY_HOOK }}")
 
           echo "HTTP Status: $HTTP_CODE"
 
-          if [ "$HTTP_CODE" != "200" ] && [ "$HTTP_CODE" != "201" ]; then
-            echo "Deploy hook respondio con HTTP $HTTP_CODE"
+          # Render puede responder 200, 202 o 204 dependiendo del hook
+          if [ "$HTTP_CODE" != "200" ] && [ "$HTTP_CODE" != "201" ] && [ "$HTTP_CODE" != "202" ] && [ "$HTTP_CODE" != "204" ]; then
+            echo "Deploy hook falló con HTTP $HTTP_CODE"
             exit 1
           fi
 
