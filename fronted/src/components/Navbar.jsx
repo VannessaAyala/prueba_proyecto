@@ -59,10 +59,15 @@ export default function Navbar() {
             </button>
           </div>
         ) : (
-          <Link to="/login" className="btn" style={{ padding: '0.25rem 0.75rem', fontSize: '0.8rem' }}>
-            <LogIn size={14} style={{ verticalAlign: 'middle', marginRight: '4px' }} />
-            Ingresar
-          </Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Link to="/register" className="btn btn-outline" style={{ padding: '0.25rem 0.75rem', fontSize: '0.8rem' }}>
+              Registrarse
+            </Link>
+            <Link to="/login" className="btn" style={{ padding: '0.25rem 0.75rem', fontSize: '0.8rem' }}>
+              <LogIn size={14} style={{ verticalAlign: 'middle', marginRight: '4px' }} />
+              Ingresar
+            </Link>
+          </div>
         )}
       </div>
     </nav>

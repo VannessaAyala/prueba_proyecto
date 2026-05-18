@@ -28,6 +28,22 @@ export const AuthProvider = ({ children }) => {
     return userData;
   };
 
+  const register = async (nombre, correo, contrasena) => {
+    const response = await fetch('/api/usuarios', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre, correo, contrasena, rol: 'USER' })
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.error || 'Error al registrar');
+    }
+
+    // Al registrarse, hacer login automático
+    return await login(nombre, contrasena);
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
@@ -37,7 +53,7 @@ export const AuthProvider = ({ children }) => {
   const isLoggedIn = !!user;
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAdmin, isLoggedIn }}>
+    <AuthContext.Provider value={{ user, login, logout, isAdmin, isLoggedIn, register }}>
       {children}
     </AuthContext.Provider>
   );
