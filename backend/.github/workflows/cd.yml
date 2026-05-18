@@ -1,0 +1,58 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# CD – Despliegue Continuo a Render
+#
+# Solo se ejecuta si el job de CI ("CI – Build & Test") pasó con éxito.
+# Inyecta APP_VERSION con número de run + commit hash.
+# Si el deploy falla, llama automáticamente al workflow de rollback.
+#
+# Secrets requeridos:
+#   RENDER_DEPLOY_HOOK  → URL del deploy hook (Render → Settings → Deploy Hook)
+# ─────────────────────────────────────────────────────────────────────────────
+name: CD – Deploy a Render
+
+on:
+  workflow_run:
+    workflows: [ "CI – Build & Test" ]
+    types:
+      - completed
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    name: Deploy a Render
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Info del deploy
+        run: |
+          APP_VERSION="${{ github.run_number }}-${{ github.event.workflow_run.head_sha }}"
+          echo "APP_VERSION = $APP_VERSION"
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+
+      - name: Trigger Deploy Hook en Render
+        id: deploy
+        run: |
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X GET "${{ secrets.RENDER_DEPLOY_HOOK }}")
+          echo "HTTP Status: $HTTP_CODE"
+          if [ "$HTTP_CODE" != "200" ] && [ "$HTTP_CODE" != "201" ]; then
+            echo "Deploy hook respondio con HTTP $HTTP_CODE"
+            exit 1
+          fi
+          echo "Deploy enviado exitosamente a Render"
+
+      - name: Ejecutar rollback si el deploy fallo
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'rollback.yml',
+              ref: 'main',
+              inputs: {
+                motivo: 'Deploy CD fallo automaticamente - rollback activado'
+              }
+            });
