@@ -18,14 +18,14 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test de Repositorio - ProductoRepository
- *
- * Laboratorio 2 - Paso 6a:
- *  ✅ Valida que el mapeo JPA está bien (entidad → tabla)
- *  ✅ Valida que findByNombreContainingIgnoreCase funciona
- *  ✅ Usa H2 en memoria (perfil "test") — no toca MySQL real
- *
- * @DataJpaTest carga solo la capa JPA (sin controllers ni services).
+  Test de Repositorio - ProductoRepository
+ 
+  Laboratorio 2 - Paso 6a:
+   Valida que el mapeo JPA está bien (entidad → tabla)
+   Valida que findByNombreContainingIgnoreCase funciona
+   Usa H2 en memoria (perfil "test") — no toca MySQL real
+ 
+  @DataJpaTest carga solo la capa JPA (sin controllers ni services).
  */
 @DataJpaTest
 @ActiveProfiles("test")
