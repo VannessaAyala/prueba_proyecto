@@ -27,7 +27,6 @@ COPY --from=build /app/build/libs/*.jar app.jar
 # Render inyecta PORT automáticamente; EXPOSE es solo documentación
 EXPOSE 8080
 
-ENV SPRING_PROFILES_ACTIVE=prod
 
 ENTRYPOINT ["java", \
   "-Xms128m", \
