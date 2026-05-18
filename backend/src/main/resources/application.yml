@@ -1,38 +1,28 @@
 spring:
-  # ── Datasource (conexión a MySQL / Render variables) ─────────────────────
   datasource:
-    url: ${DB_URL:jdbc:mysql://localhost:3306/tienda_ropa?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
-    username: ${DB_USER:admin}
-    password: ${DB_PASSWORD:admin}
-    driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}
+    url: ${DB_URL:jdbc:h2:mem:tienda_ropa;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL}
+    username: ${DB_USER:sa}
+    password: ${DB_PASSWORD:}
+    driver-class-name: ${DB_DRIVER:org.h2.Driver}
 
-  # ── JPA / Hibernate ──────────────────────────────────────────────────────
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     defer-datasource-initialization: true
     properties:
       hibernate:
-        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
 
-  # ── SQL Init ─────────────────────────────────────────────────────────────
   sql:
     init:
       mode: never
 
-  # ── DevTools ─────────────────────────────────────────────────────────────
-  devtools:
-    restart:
-      enabled: true
-
-# ── Servidor embebido (Tomcat) ───────────────────────────────────────────
 server:
-  port: ${PORT:8081}
+  port: ${PORT:8080}
   servlet:
     context-path: /
 
-# ── Información de la aplicación ─────────────────────────────────────────
 app:
   version: ${APP_VERSION:1.0.0-local}
   name: Tienda Ropa API
