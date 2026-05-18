@@ -34,7 +34,7 @@ jobs:
         run: chmod +x backend/gradlew
 
       - name: Build y tests
-        run: ./gradlew clean build
+        run: ./gradlew clean build -x npmInstall -x buildFrontend -x copyFrontend
         working-directory: backend
 
       - name: Publicar reporte de tests
